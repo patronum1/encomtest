@@ -7,7 +7,9 @@ if(!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 $school = $_SESSION['school'];
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $avatar = $_FILES['avatar'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -16,13 +18,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // connect to the database
     $conn = mysqli_connect("localhost", "root", "", "new");
 
+    // update avatar if it's not empty
+    if(!empty($avatar['name'])) {
+        // check if file type is valid
+        $allowed_types = array('jpg', 'jpeg', 'png');
+        $file_extension = pathinfo($avatar['name'], PATHINFO_EXTENSION);
+        if(!in_array($file_extension, $allowed_types)) {
+            $errors[] = "Invalid file type. Only JPG, JPEG, and PNG files are allowed.";
+        } else {
+            // create avatars folder if it doesn't exist
+            if(!file_exists('avatars')) {
+                mkdir('avatars');
+            }
 
+            // generate unique filename for avatar
+            $filename = uniqid() . '.' . $file_extension;
+
+            // save avatar file to avatars folder
+            move_uploaded_file($avatar['tmp_name'], 'avatars/' . $filename);
+
+            // update avatar filename in database
+            mysqli_query($conn, "UPDATE users SET avatar='$filename' WHERE username='$username'");
+        }
+    }
 
     // update password if both new and confirm passwords match
     if(!empty($new_password) && $new_password == $confirm_password) {
         mysqli_query($conn, "UPDATE users SET password='$new_password' WHERE username='$username'");
     } elseif(!empty($new_password) && $new_password != $confirm_password) {
-        $errors[] = "Passwords do not match";
+        $errors[] = "Нууц үг таарахгүй байна";
     }
 
     mysqli_close($conn);
@@ -45,109 +69,82 @@ $row = mysqli_fetch_assoc($result);
 $avatar_filename = $row['avatar'];
 mysqli_close($conn);
 ?>
-<!DOCTYPE html>
+
+<html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
     <title>Settings</title>
-    <style>
-        body {
-            background-color: #f1f8ff;
-            color: #333;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        h1 {
-            color: #0071c5;
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        form {
-            background-color: #fff;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5em;
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="file"] {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
-            margin-bottom: 1em;
-            padding: 0.5em;
-            width: 100%;
-        }
-
-        input[type="submit"] {
-            background-color: #0071c5;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.2em;
-            padding: 0.5em;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #005d9c;
-        }
-
-        p {
-            margin-bottom: 0.5em;
-        }
-
-        a {
-            color: #0071c5;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <script src="https://kit.fontawesome.com/1f6b8b9096.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+<div class="wrapper">
+    <div class="menu">
+        <h2><br><br><?php echo $school ?><br><br><?php echo $username ?><br></h2>
+        <br><br><br>
+        <ul>
+            <li><a href="dashboard.php"><i class="fa-solid fa-graduation-cap"></i><span>Оюутан</span></a></li>
+            <li><a href="dashboard2.php"><i class="fa-solid fa-chart-pie"></i><span>Хүний нөөц</span></a></li>
+            <li><a href="dashboard3.php"><i class="fa-solid fa-book"></i><span>Эрдэм шинжилгээ</span></a></li>
+            <li><a href="dashboard4.php"><i class="fa-solid fa-earth-americas"></i><span>Гадаад харилцаа</span></a></li>
+            <li><a href="dashboard5.php"><i class="fa-solid fa-user"></i><span>ДБСБ-ын нэр хүнд</span></a></li>
+            <li><a href="dashboard6.php"><i class="fa-sharp fa-solid fa-book-atlas"></i><span>Сургалт</span></a></li>
+            <li><a href="dashboard7.php"><i class="fa-solid fa-bars"></i><span>Бусад</span></a></li>
+<hr><br>
+<li><a href="settings.php"><i class="fa-solid fa-gear"></i><span>Тохиргоо</span></a></li>
+<li class="bottom-of-list"><a href="signout
+.php"><i class="fa-solid fa-sign-out-alt"></i><span>Гарах</span></a></li>
+</ul>
+</div>
+<div class="dashboard-container">
+<div class="container">
+<h1>Тохиргоо</h1>
+<form method="get" action="">
+<input type="text" name="q" placeholder="Хайх" value="<?php if(isset($_GET['q'])) echo $_GET['q'] ?>">
+<style>
+    .print-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #0C46A6;
+      display: flex;
+      align-items: center;
+    }
     
+    .print-button i {
+      margin-right: 5px;
+    }
+  </style>
+</form>
+</div>
     <?php
         // check for success or error message in URL query string
         if(isset($_GET['success'])) {
-            echo "<p style='color: green'>Settings saved successfully</p>";
+            echo "<p style='color: green'>Нууц үг амжилттай өөрчлөгдсөн</p>";
         } elseif(isset($_GET['error'])) {
             echo "<p style='color: red'>" . $_GET['error'] . "</p>";
         }
     ?>
-    <form method="POST" action="update_settings.php" enctype="multipart/form-data">
-    <h1>Тохиргоо</h1>
-        <?php
-            // display user's current avatar if available
-            $conn = mysqli_connect("localhost", "root", "", "new");
-            $result = mysqli_query($conn, "SELECT avatar, school FROM users WHERE username='$username'");
-            $row = mysqli_fetch_assoc($result);
-            if($row['school']) {
-                echo "<p>Сургууль: " . $row['school'] . "</p>";
-            }
-            mysqli_close($conn);
-        ?>
-        <p>Хэрэглэгчийн нэр: <?php echo $username; ?></p>
-        <br>
-        <label for="new_password">Шинэ нууц үг:</label>
+    <div class="main">
+    <form method="POST" action="update_settings.php" enctype="multipart/form-data" class="settings-form">
+        <label for="new_password">Нууц үг солих</label>
         <input type="password" name="new_password">
-        <br>
-        <label for="confirm_password">Нууц үг давтах:</label>
+        <label for="confirm_password">Нууц үг давтах</label>
         <input type="password" name="confirm_password">
-        <br>
-        <input type="submit" value="Хадгалах">    <a href="dashboard.php">Буцах</a>
+        <input type="submit" value="Хадгалах">
     </form>
+    </div>
+    <?php
+        // display user's current avatar if available
+        $conn = mysqli_connect("localhost", "root", "", "new");
+        $result = mysqli_query($conn, "SELECT avatar, school FROM users WHERE username='$username'");
+        $row = mysqli_fetch_assoc($result);
+        if($row['avatar']) {
+            $avatar_path = "avatars/" . $row['avatar'];
+            echo "<img src='$avatar_path' alt='User Avatar' width='100' height='100'>";
+        }
+        mysqli_close($conn);
+    ?>
 </body>
 </html>

@@ -169,7 +169,7 @@ exit();
 </div>
 <div class="dashboard-container">
 <div class="container">
-<h1>Оюутан</h1>
+<h1>ДБСБ-ын нэр хүнд</h1>
 <form method="get" action="">
 <input type="text" name="q" placeholder="Хайх" value="<?php if(isset($_GET['q'])) echo $_GET['q'] ?>">
 <style>
@@ -187,9 +187,6 @@ exit();
       margin-right: 5px;
     }
   </style>
-<button class="print-button" onclick="window.print()">
-<i class="fa-solid fa-print"></i> 
-  </button>
 </form>
 </div>
 <style>

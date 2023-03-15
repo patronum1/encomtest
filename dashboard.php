@@ -187,9 +187,6 @@ exit();
       margin-right: 5px;
     }
   </style>
-<button class="print-button" onclick="window.print()">
-<i class="fa-solid fa-print"></i> 
-  </button>
 </form>
 </div>
 <style>
@@ -247,8 +244,8 @@ exit();
             echo $question; 
           ?>
           <?php if (isset($row['answer'])): ?>
-            <br> <?php echo $row['answer']; ?>
-          <?php endif; ?>
+    <br> <?php echo rtrim(number_format($row['answer'], 2), ".0"); ?>
+<?php endif; ?>
           <button class="answer-icon" onclick="showPopup('popup-<?php echo $row['id'] ?>')"><i class="fas fa-pencil-alt"></i></button>
         </div>
         <div id="popup-<?php echo $row['id'] ?>" class="popup">
@@ -258,7 +255,7 @@ exit();
             <form method="post">
               <input type="hidden" name="question_id" value="<?php echo $row['id'] ?>">
               <label for="answer"></label>
-              <input type="number" name="answer" required>
+              <input type="number" step="any" name="answer" required>
               <button type="submit"><i class="fa-solid fa-floppy-disk"></i></i></button>
               <button type="button" onclick="document.getElementById('popup-<?php echo $row['id'] ?>').style.display='none'"><i class="fa-solid fa-circle-xmark"></i></i></button>
             </form>

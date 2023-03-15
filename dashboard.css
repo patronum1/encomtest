@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -132,89 +133,133 @@ button[type="submit"] {
   padding-top: 45px;
   list-style: none;
   margin-right: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0,0, 0.247);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.247);
   transition: 0.3s;
   width: 300px;
   height: 150px;
-  margin: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-  font-size: 18px;
+margin: 20px;
+border-radius: 10px;
+overflow: hidden;
+position: relative;
+font-size: 18px;
+background-color: #fff;
+}
+
+.question li:hover {
+box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.question li a {
+position: absolute;
+bottom: 5px;
+right: 5px;
+margin: 10px;
+color: #fff;
+background-color: #2b4399;
+border-radius: 5px;
+padding: 5px 10px;
+text-decoration: none;
+}
+
+.question li a:hover {
+background-color: #2b4399e3;
+}
+
+.question li p {
+margin: 10px;
+font-size: 18px;
+border-radius: 10px;
+}
+
+.popup-container {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: white;
+border: none;
+outline: none;
+box-shadow: none;
+}
+.settings-form {
+  flex-wrap: wrap;
+  width: 700px;
+  margin: 40px auto;
+  padding: 40px;
   background-color: #fff;
-  }
-  
-  .question li:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  .question li a {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  margin: 10px;
-  color: #fff;
-  background-color: #2b4399;
-  border-radius: 5px;
-  padding: 5px 10px;
-  text-decoration: none;
-  }
-  
-  .question li a:hover {
-  background-color: #2b4399e3;
-  }
-  
-  .question li p {
-  margin: 10px;
-  font-size: 18px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+}
+
+.settings-form h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.settings-form label {
+  display: block;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.settings-form input[type="password"],
+.settings-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 16px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
   }
   
-  .popup-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  .settings-form input[type="submit"] {
+  background-color: #2b4399;
+  color: #fff;
   border: none;
-  outline: none;
-  box-shadow: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
   }
   
-  /* Media queries for responsiveness */
-  
-  @media (max-width: 1024px) {
-    .dashboard-container {
-      width: 100%;
-      margin-left: 0;
-    }
-    .menu {
-      position: static;
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      font-size: 1.2em; /* Add this line and adjust the value to increase or decrease the menu size */
-    }
-  
-    .menu ul {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
+  .settings-form p:last-of-type {
+  margin-bottom: 30px;
   }
   
-  @media (max-width: 768px) {
-    .question li {
-      width: calc(50% - 40px);
-    }
+  .settings-form a {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #2b4399;
+  font-weight: bold;
   }
   
-  @media (max-width: 480px) {
-    .question li {
-      width: 100%;
-      margin: 10px 0;
-    }
+  img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 30px auto;
   }
   
+  .error-message, .success-message {
+  margin: 10px 0;
+  padding: 12px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  }
+  
+  .error-message {
+  background-color: #f44336;
+  }
+  
+  .success-message {
+  background-color: #4CAF50;
+  }
