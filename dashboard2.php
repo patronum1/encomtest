@@ -9,7 +9,7 @@ $username = $_SESSION['username'];
 $school = $_SESSION['school'];
 
 // connect to the database
-$conn = mysqli_connect("localhost", "root", "", "new");
+require_once 'connection.php';
 
 // check connection
 if (!$conn) {

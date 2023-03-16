@@ -9,7 +9,7 @@ $username = $_SESSION['username'];
 $school = $_SESSION['school'];
 
 // connect to the database
-$conn = mysqli_connect("localhost", "root", "", "new");
+require_once 'connection.php';
 
 // check connection
 if (!$conn) {
@@ -97,6 +97,48 @@ exit();
     <link rel="stylesheet" href="dashboard.css">
     <script src="https://kit.fontawesome.com/1f6b8b9096.js" crossorigin="anonymous"></script>
     <style>
+      /* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .menu {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+
+    .menu ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .menu ul li {
+        margin: 10px;
+    }
+
+    .dashboard-container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .question {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .question-box {
+        text-align: center;
+    }
+    
+}
+
         /* Add styles for the popup window */
         .pagination {
   display: flex;

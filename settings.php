@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
 
     // connect to the database
-    $conn = mysqli_connect("localhost", "root", "", "new");
+    require_once 'connection.php';
 
     // Check if the previous password is correct
     $result = mysqli_query($conn, "SELECT password FROM users WHERE username='$username'");

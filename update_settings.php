@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
 
     // connect to the database
-    $conn = mysqli_connect("localhost", "root", "", "new");
+    require_once 'connection.php';
 
     // update avatar if it's not empty
     if(!empty($avatar)) {

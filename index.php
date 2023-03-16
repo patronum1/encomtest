@@ -7,7 +7,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     
     // connect to the database
-    $conn = mysqli_connect("localhost", "root", "", "new");
+    require_once 'connection.php';
     
     // check if user exists
     $result = mysqli_query($conn, "SELECT * FROM users WHERE school='$school' AND username='$username'");
